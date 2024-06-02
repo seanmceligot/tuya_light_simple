@@ -62,6 +62,9 @@ def dim(d):
 def bright(d):
     d.set_brightness(1000)
 
+def edison(d):
+    d.set_colour(255, 123, 0)
+
 def main():
     parser = argparse.ArgumentParser(description='Control Tuya smart bulb.')
     parser.add_argument('--name', help='device name from ~/.config/light/light.json')
@@ -69,6 +72,7 @@ def main():
     parser.add_argument('--on', action='store_true', help='Turn on the bulb')
     parser.add_argument('--purple', action='store_true', help='Set the bulb to purple')
     parser.add_argument('--yellow', action='store_true', help='Set the bulb to yellow')
+    parser.add_argument('--edison', action='store_true', help='Set the bulb to edison')
     parser.add_argument('--dim', action='store_true', help='Dim the bulb')
     parser.add_argument('--bright', action='store_true', help='Brighten the bulb')
     parser.add_argument('--debug', action='store_true', help='Enable debugging')
@@ -79,7 +83,10 @@ def main():
 
     d = tinytuya.BulbDevice(device_id, ip_address, local_key, version=3.3)
     print(f"before:\n{d.status()}")
-
+    print(f"colour_rgb {d.colour_rgb()}")
+    #import pdb
+    #pdb.set_trace()
+    
     if args.debug:
         debug()
     
@@ -91,6 +98,8 @@ def main():
         purple(d)
     elif args.yellow:
         yellow(d)
+    elif args.edison:
+        edison(d)
     elif args.dim:
         dim(d)
     elif args.bright:
